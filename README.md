@@ -28,7 +28,9 @@ What the server exposes:
 Development notes:
 - The static UI is in `static/index.html`.
 - If you'd like a Maven or Gradle project, or for me to commit & push the files and open a PR, tell me the branch name to use.
-<img width="1910" height="890" alt="image" src="https://github.com/user-attachments/assets/9a1b3d01-8574-4de2-893d-093f659085c2" />
+<img width="1481" height="816" alt="image" src="https://github.com/user-attachments/assets/31527655-5c72-49f8-8025-1348aeaa54a5" />
+
+https://github.com/sasanksaimanda-501/Github-Copilot/tree/main
 
 
 
