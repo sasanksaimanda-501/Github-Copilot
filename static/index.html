@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Basic Counter</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; background:#f4f6f8; }
+    .card { background:white; padding:24px; border-radius:10px; box-shadow: 0 6px 20px rgba(20,30,40,0.08); width:360px; text-align:center; }
+    .count { font-size:64px; font-weight:700; margin:12px 0; color:#111827; }
+    .controls { display:flex; gap:10px; justify-content:center; }
+    button { padding:10px 14px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; font-weight:600; }
+    button.primary { background:#2563eb; color:white; border-color:#2563eb; }
+    button.danger { background:#ef4444; color:white; border-color:#ef4444; }
+    .small { font-size:13px; color:#6b7280; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Basic Counter</h2>
+    <div id="count" class="count">0</div>
+    <div class="controls">
+      <button id="dec">Decrement</button>
+      <button id="reset" class="danger">Reset</button>
+      <button id="inc" class="primary">Increment</button>
+    </div>
+    <div class="small">Served from a tiny Java HTTP server on port 8080</div>
+  </div>
+
+  <script>
+    async function fetchCount() {
+      const r = await fetch('/api/count');
+      const j = await r.json();
+      return j.count;
+    }
+    async function postAction(path) {
+      const r = await fetch(path, { method: 'POST' });
+      const j = await r.json();
+      return j.count;
+    }
+    function updateDisplay(n) {
+      document.getElementById('count').textContent = n;
+    }
+
+    document.getElementById('inc').addEventListener('click', async () => {
+      const n = await postAction('/api/inc');
+      updateDisplay(n);
+    });
+    document.getElementById('dec').addEventListener('click', async () => {
+      const n = await postAction('/api/dec');
+      updateDisplay(n);
+    });
+    document.getElementById('reset').addEventListener('click', async () => {
+      const n = await postAction('/api/reset');
+      updateDisplay(n);
+    });
+
+    // initial load
+    (async () => {
+      try {
+        const n = await fetchCount();
+        updateDisplay(n);
+      } catch (err) {
+        document.getElementById('count').textContent = 'ERR';
+        console.error('Failed to load count', err);
+      }
+    })();
+  </script>
+</body>
+</html>
